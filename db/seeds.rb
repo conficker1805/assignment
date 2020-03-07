@@ -1,7 +1,11 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+ActiveRecord::Base.connection.execute("TRUNCATE questions RESTART IDENTITY CASCADE")
+ActiveRecord::Base.connection.execute("TRUNCATE respondents RESTART IDENTITY CASCADE")
+
+# Questions
+questions = Rails.root.join('db', 'seeds', 'questions.yml')
+Question.create!(YAML::load_file(questions))
+
+# Respondents
+respondents = YAML::load_file(Rails.root.join('db', 'seeds', 'respondents.yml'))
+respondents.each{ |i| i['profile_attributes'] = i.delete('profile') }
+Respondent.create respondents
