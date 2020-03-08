@@ -1,6 +1,10 @@
 module Api
   module V1
     class AnswersController < ApplicationController
+      def index
+        @answers = Respondent::Answer.all.page(params[:page])
+      end
+
       def create
         Validate::Submission.check!(standardize_params)
 

@@ -3,7 +3,9 @@ Rails.application.routes.draw do
 
   scope module: :api do
     namespace :v1 do
-      resources :answers, only: %w[create]
+      constraints format: :json do
+        resources :answers, only: %w[index create]
+      end
     end
   end
 end

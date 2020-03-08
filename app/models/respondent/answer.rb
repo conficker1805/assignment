@@ -1,5 +1,8 @@
 class Respondent
   class Answer < ApplicationRecord
+    # Kaminari item per page
+    paginates_per 10
+
     # Association
     belongs_to :respondent
     belongs_to :question
