@@ -36,7 +36,8 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 
   # Use rspec for unit test
-  gem 'rspec-rails'
+  gem 'rspec-rails', '4.0.0.beta3'
+  gem 'rails-controller-testing'
   gem 'shoulda-matchers'
   gem 'faker'
 
