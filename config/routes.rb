@@ -6,7 +6,10 @@ Rails.application.routes.draw do
       constraints format: :json do
         resources :answers, only: %w[index create]
         resources :questions, only: [] do
-          get :scored, on: :collection
+          collection do
+            get :scored
+            get :distributions
+          end
         end
       end
     end
