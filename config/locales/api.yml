@@ -1,0 +1,22 @@
+en:
+  api:
+    error:
+      activerecord:
+        recordnotfound:
+          message: Resurce Not Found.
+          status: 404
+      params:
+        invalid:
+          message: Your request is invalid, please check again.
+          status: 200
+      answer:
+        submittwice:
+          message: You already give responses.
+          status: 200
+
+    info:
+      something_wrong: Something wrong. Please contact admin for more information.
+
+
+
+
