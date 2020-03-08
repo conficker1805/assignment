@@ -5,6 +5,9 @@ Rails.application.routes.draw do
     namespace :v1 do
       constraints format: :json do
         resources :answers, only: %w[index create]
+        resources :questions, only: [] do
+          get :scored, on: :collection
+        end
       end
     end
   end

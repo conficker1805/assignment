@@ -8,7 +8,7 @@ class Respondent
     belongs_to :question
 
     # Validations
-    validate :unique_submission
+    validate :unique_submission, on: :create
     validates :question_id, :body, presence: true
 
     private
