@@ -8,10 +8,10 @@ class Respondent
     belongs_to :question
 
     # Validations
-    validates :question_id, :body, presence: true
-    validates :body, length: { in: 1..256 }, if: -> { question.open_ended? }
-    validate :unique_submission, on: :create
-    validate :valid_body
+    validates :question_id, :respondent_id, :body, presence: true
+    validates :body, length: { in: 1..256 }, if: -> { question&.open_ended? }
+    validate :unique_submission, if: :question, on: :create
+    validate :valid_body, if: :question
 
     private
 
@@ -26,7 +26,7 @@ class Respondent
     end
 
     def score_out_of_range
-      !(body =~ /^-?[1-5]+$/)
+      !(body =~ /^[1-5]$/)
     end
 
     def self.fetch_answers_by_gender(gender)
