@@ -18,6 +18,15 @@ module Api
           OpenStruct.new(attrs)
         end
       end
+
+      def demographic
+        Respondent::Profile.gender.values.each do |gender|
+          var_name = "@#{gender.parameterize.underscore}_answers"
+          answers  = Respondent::Answer.fetch_answers_by_gender(gender)
+          answers  = answers.map{ |i| Question.new([:id, :avg].zip(i).to_h) }
+          instance_variable_set var_name.to_sym, answers
+        end
+      end
     end
   end
 end

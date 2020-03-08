@@ -9,6 +9,7 @@ Rails.application.routes.draw do
           collection do
             get :scored
             get :distributions
+            get :demographic
           end
         end
       end

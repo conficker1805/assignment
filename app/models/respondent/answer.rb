@@ -28,5 +28,11 @@ class Respondent
     def score_out_of_range
       !(body =~ /^-?[1-5]+$/)
     end
+
+    def self.fetch_answers_by_gender(gender)
+      @scored_answers ||= Respondent::Answer.includes(respondent: :profile).where(question: Question.scored)
+      answers = @scored_answers.where(respondents: { respondent_profiles: { gender: gender } }).distinct
+      answers.group(:question_id).average('CAST (body AS INTEGER)')
+    end
   end
 end
