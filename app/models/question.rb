@@ -3,9 +3,9 @@ class Question < ApplicationRecord
 
   extend Enumerize
 
-  self.inheritance_column = "kind"
+  self.inheritance_column = 'kind'
 
   has_many :answers, class_name: 'Respondent::Answer'
 
-  enumerize :type, in: %w[scored open-ended], scope: :shallow
+  enumerize :type, in: %w[scored open_ended], scope: :shallow, predicates: true
 end

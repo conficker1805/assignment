@@ -4,7 +4,7 @@ class ExceptionFormat
   def initialize(e)
     @klass = @class_name = e.class.name
     @klass = "Error::#{@klass}" if !@klass.start_with?('Error::')
-    @klass = @klass.constantize.new rescue false
+    @klass = @klass.constantize.new(e.message) rescue false
     @message, @status = [@klass.message, @klass.status]
   end
 end

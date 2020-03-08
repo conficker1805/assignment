@@ -29,5 +29,14 @@
 # To learn more, please read the Rails Internationalization guide
 # available at https://guides.rubyonrails.org/i18n.html.
 
+
 en:
-  hello: "Hello world"
+  activerecord:
+    errors:
+      messages:
+        record_invalid: '%{errors}'
+      models:
+        respondent/answer:
+          attributes:
+            body:
+              # invalid: 'Must include uppercase & number'
