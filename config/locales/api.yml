@@ -16,6 +16,7 @@ en:
 
     info:
       something_wrong: Something wrong. Please contact admin for more information.
+      not_found: You don't have permission on this resource.
 
 
 

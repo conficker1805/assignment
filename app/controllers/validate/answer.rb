@@ -5,6 +5,7 @@ module Validate
     attr_accessor :question_id, :body
 
     validates :question_id, :body, presence: true
+    validates :question_id, numericality: { only_integer: true }
 
     def initialize(attrs)
       attrs.each { |name, value| send("#{name}=", value) }

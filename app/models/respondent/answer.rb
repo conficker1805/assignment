@@ -21,7 +21,7 @@ class Respondent
 
     def valid_body
       if question.scored? && score_out_of_range
-        raise Error::Params::Invalid, "Your answer should be a number from 1 to 5"
+        raise Error::Params::Invalid, "Your answer should be a number from 1 to 5 for scored questions"
       end
     end
 

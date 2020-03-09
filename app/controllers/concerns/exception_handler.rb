@@ -3,7 +3,9 @@ module ExceptionHandler
     begin
       yield
     rescue NameError => e
-      render json: { message: (Rails.env.production? ? I18n.t('api.info.something_wrong') : e.message) }, status: 500
+      render json: { success: false, message: I18n.t('api.info.something_wrong') }, status: 500
+    rescue ActiveRecord::RecordNotFound => e
+      render json: { success: false, message: I18n.t('api.info.not_found') }, status: 404
     rescue ActiveRecord::RecordInvalid => e
       render_json_exception(Error::Params::Invalid.new(e.message))
     rescue StandardError => e

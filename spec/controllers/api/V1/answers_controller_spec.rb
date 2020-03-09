@@ -60,8 +60,11 @@ describe Api::V1::AnswersController, type: :controller do
           ]
         }}
 
-        it 'should raise error' do
-          expect { do_request(params) }.to raise_error(ActiveRecord::RecordNotFound)
+        it 'should return error' do
+          do_request(params)
+          result = JSON.parse(response.body).with_indifferent_access
+          expect(result[:success]).to be_falsey
+          expect(result[:message]).to eq 'You don\'t have permission on this resource.'
         end
       end
 
@@ -95,7 +98,45 @@ describe Api::V1::AnswersController, type: :controller do
           expect { do_request(params) }.not_to change{ Respondent::Answer.count }
           result = JSON.parse(response.body).with_indifferent_access
           expect(result[:success]).to be_falsey
-          expect(result[:message]).to eq 'Your answer should be a number from 1 to 5'
+          expect(result[:message]).to eq 'Your answer should be a number from 1 to 5 for scored questions'
+          expect(respondent.answers.count).to eq 0
+        end
+      end
+
+      context 'do not give answer for mandatory questions' do
+        let!(:question3) { create :question, optional: false }
+
+        let(:params) {{
+          respondentIdentifier: respondent.identifier,
+          responses: [
+            { questionId: question1.id, body: Faker::Lorem.sentence },
+            { questionId: question2.id, body: 3 }
+          ]
+        }}
+
+        it 'should not create any answer and raise error' do
+          expect { do_request(params) }.not_to change{ Respondent::Answer.count }
+          result = JSON.parse(response.body).with_indifferent_access
+          expect(result[:success]).to be_falsey
+          expect(result[:message]).to eq 'Please give response for mandatory questions.'
+          expect(respondent.answers.count).to eq 0
+        end
+      end
+
+      context 'giving 2 answers for single question' do
+        let(:params) {{
+          respondentIdentifier: respondent.identifier,
+          responses: [
+            { questionId: question1.id, body: Faker::Lorem.sentence },
+            { questionId: question1.id, body: Faker::Lorem.sentence }
+          ]
+        }}
+
+        it 'should not create any answer' do
+          expect { do_request(params) }.not_to change{ Respondent::Answer.count }
+          result = JSON.parse(response.body).with_indifferent_access
+          expect(result[:success]).to be_falsey
+          expect(result[:message]).to eq 'Are you giving response twice on a question?'
           expect(respondent.answers.count).to eq 0
         end
       end

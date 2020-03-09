@@ -11,11 +11,9 @@ module Api
         user = Respondent.find_by!(identifier: respondent_id)
 
         ActiveRecord::Base.transaction do
-          objects = answer_params.map{ |h| Respondent::Answer.new(h.merge(respondent: user)) }
-          objects.map(&:save!)
+          @answers = answer_params.map{ |h| Respondent::Answer.new(h.merge(respondent: user)) }
+          @answers.map(&:save!)
         end
-
-        @answers = user.answers
       end
 
       protected

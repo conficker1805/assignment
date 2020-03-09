@@ -1,5 +1,6 @@
 ActiveRecord::Base.connection.execute("TRUNCATE questions RESTART IDENTITY CASCADE")
 ActiveRecord::Base.connection.execute("TRUNCATE respondents RESTART IDENTITY CASCADE")
+ActiveRecord::Base.connection.execute("TRUNCATE respondent_answers RESTART IDENTITY CASCADE")
 
 # Questions
 questions = Rails.root.join('db', 'seeds', 'questions.yml')
