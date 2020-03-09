@@ -1,0 +1,21 @@
+version: '3'
+services:
+  db:
+    image: postgres:11
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+  web:
+    build: .
+    command: rails server -p 3000 -b '0.0.0.0'
+    volumes:
+      - '.:/app'
+    ports:
+      - '3000:3000'
+    environment:
+      HOST: db
+    depends_on:
+      - db

@@ -5,6 +5,9 @@ ruby '2.7.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.0'
+# Fixed delicated warnings but it does not work for docker
+# gem 'rails', git: 'https://github.com/rails/rails.git', branch: '6-0-stable'
+
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
